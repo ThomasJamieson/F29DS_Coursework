@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+        <title>BDD Generator</title>
+    </head>
+    <body onload="handleOperationSelection()">
+        <h1>BDD Generator</h1>
+        <br>
+        <div style="width:20%">
+            <form id="main_form" action="/generated" method="post">
+                <ul>
+                    <li>
+                        <label for="operation">Operation</label>
+                        <select name="operation" id="operation_select" onchange="handleOperationSelection()">
+                            <option value="new">New</option>
+                            <option value="update">Update</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label id="page_label" for="page">Page:</label>
+                        <input type="text" id="page" name="page" required>
+                    </li>
+                    <li>
+                        <label id="space_label" for="space">Space:</label>
+                        <input type="text" id="space" name="space" required>
+                    </li>
+                    <li>
+                        <label id="path_label" for="path">Path:</label>
+                        <input type="text" id="path" name="path" required>
+                    </li>
+                    <li>
+                        <label id="code_label" for="file_text">Code:</label>
+                        <textarea id="file_text" name="file_text" rows="4" cols="50" required></textarea>
+                    </li>
+                    <li style="margin-bottom: 5px;">
+                        <button type="submit">Submit</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <script>
+            function handleOperationSelection() {
+                value = document.getElementById("operation_select").value;
+                console.log(value);
+                if (value == "new") {
+                    document.getElementById("file_text").style.display = "none";
+                    document.getElementById("file_text").required = false;
+                    document.getElementById("code_label").style.display = "none";
+                }
+                else {
+                    document.getElementById("file_text").style.display = "inline";
+                    document.getElementById("file_text").required = true;
+                    document.getElementById("code_label").style.display = "inline";
+                }
+            }
+        </script>
+    </body>
+</html>

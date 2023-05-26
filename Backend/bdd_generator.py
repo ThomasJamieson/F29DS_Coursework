@@ -13,7 +13,7 @@ import json
 
 app = Flask(__name__)
 
-@app.route('/generate', methods=['GET', 'POST'])
+@app.route('/generate-data', methods=['GET', 'POST'])
 def generate_data():
     try:
         data = sg.get_requirements(request.args.get("space"), request.args.get("page"))
@@ -46,13 +46,13 @@ def generate_data():
 class ScenarioGetter():
     def __init__(self):
         # Open config file to get Confluence credentials
-        config_path = os.path.join(os.path.dirname(__file__), 'Config\ProjectSpecific.yaml')
+        config_path = os.path.join(os.path.dirname(__file__), 'Config/Credentials.yaml')
         with open(config_path, 'r') as config:
             config_data = yaml.safe_load(config)
             self._confluence = Confluence(
-                url=config_data["Servers"]["Confluence"]["url"],
-                username=config_data["Servers"]["Confluence"]["username"],
-                password=config_data["Servers"]["Confluence"]["password"]
+                url=config_data["url"],
+                username=config_data["username"],
+                password=config_data["password"]
             )
 
     def check_page_exists(self, page, space):
@@ -143,7 +143,8 @@ class ScenarioGetter():
         if os.environ.get("HTTP_PROXY") or os.environ.get("HTTPS_PROXY"):
             raise errors.ProxyEnvError
         try:
-            page_found = self.check_page_exists(page, space)
+            # page_found = self.check_page_exists(page, space)
+            page_found = True
             if not page_found:
                 raise errors.PageNotFoundError
         except errors.CredentialsError:
@@ -154,7 +155,8 @@ class ScenarioGetter():
             raise
 
         try:
-            page_id = self._confluence.get_page_id(space, page)
+            # page_id = self._confluence.get_page_id(space, page)
+            pass
         except requests.HTTPError as e:
             if e.response.status_code == 401:
                 raise errors.CredentialsError
@@ -163,22 +165,22 @@ class ScenarioGetter():
 
         # URL required for accessing requirements in the page
         # Not used for uni project as mock data is used
-        url = self._confluence.url + '/rest/reqs/1/requirement2/' + space
+        # url = self._confluence.url + '/rest/reqs/1/requirement2/' + space
 
-        params = {
-            "Accept": 'application/json',
-            "spaceKey": space,
-            "q": "page = " + page_id
-        }
+        # params = {
+        #     "Accept": 'application/json',
+        #     "spaceKey": space,
+        #     "q": "page = " + page_id
+        # }
 
-        response = requests.get(url,
-                                params,
-                                auth=requests.auth.HTTPBasicAuth(self._confluence.username, self._confluence.password))
+        # response = requests.get(url,
+        #                         params,
+        #                         auth=requests.auth.HTTPBasicAuth(self._confluence.username, self._confluence.password))
 
-        if response.status_code == 401:
-            raise errors.CredentialsError
+        # if response.status_code == 401:
+        #     raise errors.CredentialsError
 
-        response_data = response.json()['results']
+        # response_data = response.json()['results']
         
         mock_data = [
             {
@@ -485,7 +487,7 @@ class Catch2CodeGenerator(CodeGenerator):
             file_string = file_string + new_string
         return file_string
 
-class ErrorFormatter(Component):
+class ErrorFormatter():
     def generate_error_string(self, text):
         error_text = "Error: {error}"
         return error_text.format(error=text)
@@ -534,4 +536,4 @@ if __name__ == "__main__":
     sg = ScenarioGetter()
     cg = Catch2CodeGenerator()
     ef = ErrorFormatter()
-    app.run(port=int("8001"), debug=True)
+    app.run(host="0.0.0.0", port=8000)

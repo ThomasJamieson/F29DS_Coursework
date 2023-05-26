@@ -1,0 +1,7 @@
+#main_form ul {
+    list-style: none;
+}
+
+#main_form ul li {
+    margin-bottom: 10px;
+}

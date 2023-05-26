@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>BDD Generator</title>
+    </head>
+    <body>
+        <h1>BDD Generator</h1>
+        <h2>{{ page }} - {{ space }}</h2>
+        <table>
+            <tr>
+                <th style="text-align: left;">Generated Code</th>
+                <th style="text-align: right;"><button onclick="copyText()">Copy Text</button></th>
+                <th style="text-align: right;"><button onclick="downloadCode('{{ path}}')">Download</button></th>
+            </tr>
+            <tr>
+                <td id="code_view" colspan="3" style="white-space: pre-wrap; background-color: lightgray; font-family: Consolas;">{{ code }}</td>
+            </tr>
+        </table>
+        <script>
+            function copyText() {
+                var text = document.getElementById("code_view");
+                navigator.clipboard.writeText(text.innerHTML);
+                alert("Copied code");
+            }
+
+            function downloadCode(path) {
+                text = document.getElementById("code_view").innerHTML;
+                var element = document.createElement("a");
+                element.setAttribute("href", "data:text/plain;charset=utf-8" + encodeURIComponent(text));
+                element.setAttribute("download", path);
+                element.style.display = "none";
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            }
+        </script>
+    </body>
+</html>
