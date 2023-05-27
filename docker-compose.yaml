@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
   frontend:
-    container_name: Frontend
-    build: ./Frontend
+    container_name: frontend
+    image: f29dscourseworkacr.azurecr.io/frontend:latest
     ports:
-      - "8001:8000"
+      - "8001:8001"
     
   backend:
-    container_name: Backend
-    build: ./Backend
+    container_name: backend
+    image: f29dscourseworkacr.azurecr.io/backend:latest
     ports:
-      - "8002:8000"
+      - "8002:8002"

@@ -25,9 +25,8 @@ def get_generated_data():
         params = {'operation': operation, 'page': page, 'space': space, 'path': path}
     elif operation == "update":
         params = {'operation': operation, 'page': page, 'space': space, 'file_text':file_text}
-    x = str(requests.get("http://backend:8000/generate", params=params).text)
-    # x = str(requests.get("http://127.0.0.1:8002/generate-data", params=params).text)
-    return render_template("generated.html", code=x, page=page, space=space, path=path)
+    generated_code = str(requests.get("http://backend:8002/generate-data", params=params).text)
+    return render_template("generated.html", code=generated_code, page=page, space=space, path=path)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True, port=8000)
+    app.run(host="0.0.0.0", port=8001)
