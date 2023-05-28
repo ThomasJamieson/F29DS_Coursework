@@ -13,7 +13,7 @@ import json
 
 app = Flask(__name__)
 
-@app.route('/generate-data', methods=['GET', 'POST'])
+@app.route('/generate-data', methods=['GET'])
 def generate_data():
     try:
         data = sg.get_requirements(request.args.get("space"), request.args.get("page"))

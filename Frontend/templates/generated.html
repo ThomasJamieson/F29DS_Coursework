@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/generated.css') }}">
         <title>BDD Generator</title>
     </head>
     <body>
@@ -14,14 +15,20 @@
                 <th style="text-align: right;"><button onclick="downloadCode('{{ path}}')">Download</button></th>
             </tr>
             <tr>
-                <td id="code_view" colspan="3" style="white-space: pre-wrap; background-color: lightgray; font-family: Consolas;">{{ code }}</td>
+                <td id="code_view" colspan="3">{{ code }}</td>
             </tr>
         </table>
         <script>
             function copyText() {
                 var text = document.getElementById("code_view");
-                navigator.clipboard.writeText(text.innerHTML);
-                alert("Copied code");
+                navigator.clipboard
+                    .writeText(copyText.value)
+                    .then(() => {
+                      alert("successfully copied");
+                    })
+                    .catch(() => {
+                      alert("something went wrong");
+                    });
             }
 
             function downloadCode(path) {

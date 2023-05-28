@@ -1,7 +1,20 @@
+h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#main_div {
+    width:30%;
+}
+
 #main_form ul {
     list-style: none;
 }
 
 #main_form ul li {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin-bottom: 10px;
+}
+
+#main_form ul li label {
+    display: inline-block;
 }

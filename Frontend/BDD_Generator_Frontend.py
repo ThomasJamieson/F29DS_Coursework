@@ -7,7 +7,7 @@ app = Flask(__name__)
 def load_home():
     return render_template("home.html")
 
-@app.route('/generated', methods=['GET', 'POST'])
+@app.route('/generated', methods=['POST'])
 def get_generated_data():
     if request.method=="POST":
         operation = request.form.get("operation").lower()

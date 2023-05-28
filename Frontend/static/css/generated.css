@@ -1,0 +1,9 @@
+h1, h2, th{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#code_view {
+    white-space: pre-wrap;
+    background-color: lightgray;
+    font-family: Consolas;
+}
